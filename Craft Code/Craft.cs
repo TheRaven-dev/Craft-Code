@@ -1,5 +1,6 @@
 ﻿using robotManager.Helpful;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using wManager.Wow.Helpers;
 using wManager.Wow.ObjectManager;
@@ -88,6 +89,7 @@ namespace Skill
         {
             if (TradeSkillFrame())
             {
+                Logging.Write("Closed up TradeFrame");
                 Lua.LuaDoString("HideUIPanel(TradeSkillFrame)");
             }
         }
@@ -107,6 +109,8 @@ namespace Skill
         {
             if (!TradeSkillFrame())
             {
+
+                Logging.Write("Opened TradeFrame");
                 Lua.LuaDoString("CastSpellByName(\"" + ProfessionName + "\")");
             }
         }
