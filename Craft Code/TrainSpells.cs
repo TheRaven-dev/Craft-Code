@@ -7,13 +7,13 @@ namespace Craft_Code
 {
     public static class TrainSpells
     {
-        public static int PlayerMoney = Lua.LuaDoString<int>("return GetMoney()");
-        public static int GetNumTrainerServices()
+        private static int PlayerMoney = Lua.LuaDoString<int>("return GetMoney()");
+        private static int GetNumTrainerServices()
         {
             return Lua.LuaDoString<int>("return GetNumTrainerServices();");
         }
 
-        public static void SetAvailable()
+        private static void SetAvailable()
         {
             Lua.LuaDoString(@"SetTrainerServiceTypeFilter('available', 1);
                             SetTrainerServiceTypeFilter('unavailable', 0);
@@ -31,7 +31,6 @@ namespace Craft_Code
                     SetAvailable();
                     int SpellCost = Lua.LuaDoString<int>("local moneyCost = GetTrainerServiceCost(" + s + "); return moneyCost;");
                     string[] GetTrainerServiceInfo = Lua.Wow.GetTrainerServiceInfo<string[]>(s);
-
                     //Learn Single Spell
                     if (SpellName.Length > 0)
                     {

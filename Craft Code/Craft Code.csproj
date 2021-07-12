@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Craft.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DungeonCode.cs" />
     <Compile Include="TrainSpells.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

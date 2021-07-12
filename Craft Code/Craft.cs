@@ -1,15 +1,14 @@
 ﻿using robotManager.Helpful;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using wManager.Wow.Helpers;
 using wManager.Wow.ObjectManager;
 
 namespace Skill
 {
-    public static class Craft
+    internal static class Craft
     {
-        public static int CraftCount = 0;
+        private static int CraftCount = 0;
         public static bool HasRecipeByName(string ProfessionName, string RecipeName)
         {
             OpenTradeFrame(ProfessionName);
@@ -61,6 +60,7 @@ namespace Skill
                         else
                         {
                             Logging.Write("You do not have enough mats to craft " + itemName);
+                            break;
                         }
                     }
                 }
@@ -76,43 +76,43 @@ namespace Skill
                     {
                         Thread.Sleep(300);
                     }
-                    HideFrame();
                 }
-                else
-                {
-                    HideFrame();
-                }
+                HideFrame();
             }
         }
 
-        public static void HideFrame()
-        {
-            if (TradeSkillFrame())
-            {
-                Logging.Write("Closed up TradeFrame");
-                Lua.LuaDoString("HideUIPanel(TradeSkillFrame)");
-            }
-        }
-
-        public static int GetNumTradeSkills()
+        private static int GetNumTradeSkills()
         {
             return Lua.LuaDoString<int>("return GetNumTradeSkills();");
         }
 
-        public static bool TradeSkillFrame()
+        private static bool TradeSkillFrame()
         {
             return Lua.LuaDoString<bool>("return TradeSkillFrame:IsVisible();");
         }
 
-
-        public static void OpenTradeFrame(string ProfessionName)
+        private static void HideFrame()
         {
-            if (!TradeSkillFrame())
+            try
             {
-
-                Logging.Write("Opened TradeFrame");
-                Lua.LuaDoString("CastSpellByName(\"" + ProfessionName + "\")");
+                if (TradeSkillFrame())
+                {
+                    Lua.LuaDoString("HideUIPanel(TradeSkillFrame)");
+                }
             }
+            catch { }
+        }
+
+        private static void OpenTradeFrame(string ProfessionName)
+        {
+            try
+            {
+                if (!TradeSkillFrame())
+                {
+                    Lua.LuaDoString("CastSpellByName(\"" + ProfessionName + "\")");
+                }
+            }
+            catch { }
         }
     }
 }
