@@ -4,11 +4,10 @@ using System.Threading;
 using wManager.Wow.Helpers;
 using wManager.Wow.ObjectManager;
 
-namespace Skill
+namespace Craft.Lib
 {
     internal static class Craft
     {
-        private static int CraftCount = 0;
         public static bool HasRecipeByName(string ProfessionName, string RecipeName)
         {
             OpenTradeFrame(ProfessionName);
@@ -48,13 +47,11 @@ namespace Skill
                         {
                             if (Quantity <= 0)
                             {
-                                CraftCount = CraftQuantity;
-                                Lua.LuaDoString("DoTradeSkill(" + i + ", " + CraftQuantity + ");");
+                                DoTradeSkill(i, CraftQuantity);
                             }
                             else
                             {
-                                CraftCount = Quantity;
-                                Lua.LuaDoString("DoTradeSkill(" + i + ", " + Quantity + ");");
+                                DoTradeSkill(i, Quantity);
                             }
                         }
                         else
@@ -65,11 +62,20 @@ namespace Skill
                     }
                 }
             }
+            catch { }
+        }
+
+        private static void DoTradeSkill(int RecipeNum, int CraftQuantity)
+        {
+            try
+            {
+                Lua.LuaDoString("DoTradeSkill(" + RecipeNum + ", " + CraftQuantity + ");");
+            }
             finally
             {
-                if (CraftCount > 0)
+                if (CraftQuantity > 0)
                 {
-                    int Time = (3000 + Usefuls.LatencyReal) * CraftCount;
+                    int Time = (3000 + Usefuls.LatencyReal) * CraftQuantity;
                     MovementManager.StopMoveTo(false, Time);
                     DateTime time = DateTime.Now.AddMilliseconds(Time);
                     while (DateTime.Now < time && !ObjectManager.Me.InCombatFlagOnly && !ObjectManager.Me.InCombat)
