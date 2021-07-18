@@ -28,7 +28,6 @@ namespace Craft.Lib
             {
                 HideFrame();
             }
-
         }
 
         public static void CraftItemByName(string profession, string itemName, int Quantity = 0)
