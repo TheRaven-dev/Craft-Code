@@ -65,7 +65,7 @@ public static class ItemLib
         }
     }
 
-    public static void SplitItemStack(String ItemName, Int32 StackAmount)
+    public static void SplitItemStack(String ItemName, Int32 StackAmount = 5)
     {
         string[] FreeSlot = GetFreeSlots().Split(',');
         try
