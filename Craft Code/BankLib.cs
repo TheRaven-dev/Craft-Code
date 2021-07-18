@@ -2,7 +2,6 @@
 using wManager.Wow.Helpers;
 
 
-
 namespace BankLib
 {
     public static class Bank
@@ -17,7 +16,8 @@ namespace BankLib
                     for(Int32 Slot = 1; Slot <= GetContainerNumSlots(Bag); Slot++)
                     {
                         String BagItem = GetContainerItemLink(Bag,Slot)[0];
-                        if(BagItem == ItemName)
+                        String[] GetItemInfo = Lua.Wow.GetItemInfo<String[]>(BagItem);
+                        if (GetItemInfo[0] == ItemName)
                         {
                             UseContainerItem(Bag, Slot);
                             break;
@@ -37,7 +37,8 @@ namespace BankLib
                     for (Int32 Slot = 1; Slot <= GetContainerNumSlots(Bag); Slot++)
                     {
                         String BagItem = GetContainerItemLink(Bag, Slot)[0];
-                        if (BagItem == ItemName)
+                        String[] GetItemInfo = Lua.Wow.GetItemInfo<String[]>(BagItem);
+                        if (GetItemInfo[0] == ItemName)
                         {
                             int Count = int.Parse(GetContainerItemInfo(Bag, Slot)[1]);
                             if(Count > SplitAMount)
@@ -105,6 +106,5 @@ namespace BankLib
                 Bag.PutSelectedItemInBag();
             }
         }
-
     }
 }
