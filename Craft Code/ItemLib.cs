@@ -5,6 +5,12 @@ using wManager.Wow.Helpers;
 
 public static class ItemLib
 {
+    public enum SplitType
+    {
+        PlaceInbag,
+        Vender
+
+    }
     public static void DeleteItem(String ItemName, Int32 leaveAmount = 0, Int32 TimeDelay = 1000)
     {
         Int32 Deleted = 0;
@@ -65,7 +71,7 @@ public static class ItemLib
         }
     }
 
-    public static void SplitItemStack(String ItemName, Int32 StackAmount = 5)
+    public static void SplitItemStack(String ItemName, bool SellToVender = false, Int32 StackAmount = 5)
     {
         string[] FreeSlot = GetFreeSlots().Split(',');
         try
@@ -81,11 +87,22 @@ public static class ItemLib
                         {
                             if (GetItemInfo[0].ToLower() == ItemName.ToLower())
                             {
+                                Lua.LuaDoString("ClearCursor();");
                                 if (StackCount(B, S) > StackAmount)
-                                {
-                                    Lua.LuaDoString("ClearCursor();");
+                                { 
                                     Lua.LuaDoString("SplitContainerItem(" + B + ", " + S + ", " + StackAmount + ");");
                                     Lua.LuaDoString("PickupContainerItem(" + FreeSlot[0] + ", " + FreeSlot[1] + ");");
+                                    Thread.Sleep(10);
+                                    if(SellToVender)
+                                    {
+                                        Boolean MerchantFrame = Lua.LuaDoString<Boolean>("MerchantFrame:IsVisible();");
+                                        if(MerchantFrame)
+                                        {
+                                            Lua.LuaDoString("ShowMerchantSellCursor(1);");
+                                            Thread.Sleep(10);
+                                            Lua.LuaDoString("UseContainerItem(" + FreeSlot[0] + ", " + FreeSlot[1] + ");");
+                                        }
+                                    }
                                     break;
                                 }
                             }
