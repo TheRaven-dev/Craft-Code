@@ -92,10 +92,9 @@ public static class ItemLib
                                 { 
                                     Lua.LuaDoString("SplitContainerItem(" + B + ", " + S + ", " + StackAmount + ");");
                                     Lua.LuaDoString("PickupContainerItem(" + FreeSlot[0] + ", " + FreeSlot[1] + ");");
-                                    Thread.Sleep(10);
                                     if(SellToVender)
                                     {
-                                        Boolean MerchantFrame = Lua.LuaDoString<Boolean>("MerchantFrame:IsVisible();");
+                                        Boolean MerchantFrame = Lua.LuaDoString<Boolean>("return MerchantFrame:IsVisible();");
                                         if(MerchantFrame)
                                         {
                                             Lua.LuaDoString("ShowMerchantSellCursor(1);");

@@ -50,6 +50,7 @@
     <Compile Include="BankLib.cs" />
     <Compile Include="CraftLib.cs" />
     <Compile Include="ItemLib.cs" />
+    <Compile Include="LoadAndExcuteSteps%28Quester%29.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
