@@ -32,6 +32,8 @@ public static class QuestHelper
 }
 
 //Creates the Load profile Step. (Will be last step in a profile.)
+//List of Quest Actions - https://wrobot.eu/byme/doc/html/T-wManager.Wow.Class.QuestAction.htm
+//Code mean the code you want to use, like if set to lua, code = You're lua Code.
 //QuestHelper.CreateQuesterStep(QuestAction.LoadProfile, "LoadedProfile.xml");
 
 //will jump (excute) the step name that is listed.
