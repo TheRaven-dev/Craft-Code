@@ -1,26 +1,29 @@
-﻿//Place into Quester > CustomScripts.
+﻿using wManager.Wow.Helpers;
+using wManager.Wow.Class;
+using Quester.Profile;
+using System;
 
-public static class Load
+//Place into Quester > CustomScripts.
+public static class QuestHelper
 {
-    public static void Profile(string ProfileName)
+    public static void CreateQuesterStep(QuestAction questAction, String Code)
     {
-        var p = wManager.Wow.Helpers.Quest.QuesterCurrentContext.Profile as Quester.Profile.QuesterProfile;
+        var p = Quest.QuesterCurrentContext.Profile as QuesterProfile;
         if (p != null)
         {
-            p.QuestsSorted.Add(new wManager.Wow.Class.QuestsSorted { Action = wManager.Wow.Class.QuestAction.LoadProfile, NameClass = ProfileName + ".xml" });
+            p.QuestsSorted.Add(new QuestsSorted { Action = questAction, NameClass = Code });
         }
     }
-
-    public static void LoadStep(string stepName)
+    public static void ExecuteStep(String StepName, int BeforeStep = 0)
     {
-        var p = wManager.Wow.Helpers.Quest.QuesterCurrentContext.Profile as Quester.Profile.QuesterProfile;
+        var p = Quest.QuesterCurrentContext.Profile as QuesterProfile;
         if (p != null)
         {
             for (int i = 0; i < p.QuestsSorted.Count; i++)
             {
-                if (p.QuestsSorted[i].NameClass == stepName + ".xml")
+                if (p.QuestsSorted[i].NameClass == StepName)
                 {
-                    wManager.Wow.Helpers.Quest.QuesterCurrentContext.CurrentStep = i;
+                    Quest.QuesterCurrentContext.CurrentStep = i + BeforeStep;
                     break;
                 }
             }
@@ -29,7 +32,7 @@ public static class Load
 }
 
 //Creates the Load profile Step. (Will be last step in a profile.)
-//Load.Profile("LoadedProfile");
+//QuestHelper.CreateQuesterStep(QuestAction.LoadProfile, "LoadedProfile.xml");
 
 //will jump (excute) the step name that is listed.
-//Load.LoadStep("LoadedProfile");
+//QuestHelper.LoadStep("LoadedProfile.xml");
